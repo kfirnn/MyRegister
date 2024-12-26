@@ -1,4 +1,4 @@
-package com.example.myregister.model;
+package com.example.myregister.models;
 
 public class User {
     String id;
@@ -35,51 +35,51 @@ public class User {
 
     }
 
-    protected String getId() {
+     public String getId() {
         return id;
     }
 
-    protected void setId(String id) {
+     public void setId(String id) {
         this.id = id;
     }
 
-    protected String getfName() {
+    public String getfName() {
         return fName;
     }
 
-    protected void setfName(String fName) {
+    public void setfName(String fName) {
         this.fName = fName;
     }
 
-    protected String getlName() {
+    public String getlName() {
         return lName;
     }
 
-    protected void setlName(String lName) {
+    public void setlName(String lName) {
         this.lName = lName;
     }
 
-    protected String getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    protected void setPhone(String phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    protected String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    protected void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    protected String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    protected void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
