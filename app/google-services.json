@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "331620393377",
+    "project_id": "myregister22",
+    "storage_bucket": "myregister22.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331620393377:android:833e155dbe5f794a0f6be0",
+        "android_client_info": {
+          "package_name": "com.example.myregister"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzrH2-YXUoIQsgvieeG-pOAgdb8v86vF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="CityArr">
+        <item>ראשון לציון</item>
+        <item>תל אביב</item>
+        <item>רחובות</item>
+        <item>רמת גן</item>
+        <item>בת ים</item>
+        <item>הרצליה</item>
+        <item>פתח תקווה</item>
+        <item>אשדוד</item>
+        <item>חיפה</item>
+        <item>ירושלים</item>
+        <item>באר שבע</item>
+        <item>רעננה</item>
+        <item>בני ברק</item>
+
+    </string-array>
+</resources>
