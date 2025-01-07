@@ -1,22 +1,23 @@
 package com.example.myregister.screens;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.myregister.R;
+import com.example.myregister.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,77 +25,107 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
-    EditText etEmail, etPassword;
-    Button btnLog;
-    String email, pass;
-    FirebaseDatabase database;
-    DatabaseReference myRef;
+
+    private static final String TAG = "loginToFireBase";
+    TextView txtLogin;
+    EditText etEmailLogin, etPasswordLogin;
+    Button btnLogin;
+
+    String email2, pass2;
     private FirebaseAuth mAuth;
+    String admin = "kfirn5566@gmail.com";
+
+    public static final String MyPREFERENCES = "MyPrefs";
+
+
+    SharedPreferences sharedpreferences;
+
+    private FirebaseDatabase database;
+    private DatabaseReference myRef, farmerRef;
+    public static User theUser;
+
+    public static Boolean isAdmin=false;
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-        initviews();
 
+        mAuth = FirebaseAuth.getInstance();
 
-    }
-
-    private void initviews() {
-        etEmail= findViewById(R.id.etEmailLog);
-        etPassword= findViewById(R.id.etPassLog);
-        btnLog = findViewById(R.id.btnLogin);
-        btnLog.setOnClickListener(this);
-          mAuth = FirebaseAuth.getInstance();
-        database=FirebaseDatabase.getInstance();
-        myRef=database.getReference("Users");
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        init_views();
+        database = FirebaseDatabase.getInstance();
+        email2 = sharedpreferences.getString("email", "");
+        pass2 = sharedpreferences.getString("password", "");
+        etEmailLogin.setText(email2);
+        etPasswordLogin.setText(pass2);
 
     }
+
+    private void init_views() {
+        btnLogin = findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(this);
+        etEmailLogin = findViewById(R.id.etEmailLog);
+        etPasswordLogin = findViewById(R.id.etPassword);
+    }
+
 
     @Override
     public void onClick(View v) {
-        email = etEmail.getText().toString();
-        pass = etPassword.getText().toString();
-        mAuth.signInWithEmailAndPassword(email,pass)
+        email2 = etEmailLogin.getText().toString();
+        pass2 = etPasswordLogin.getText().toString();
+
+        mAuth.signInWithEmailAndPassword(email2, pass2)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<AuthResult> task) {
+                    public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("TAG", "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            final String userUid = user.getUid();
 
+
+                            SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                            editor.putString("email", email2);
+                            editor.putString("password", pass2);
+
+                            editor.commit();
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            final FirebaseUser user = mAuth.getCurrentUser();
+
+                            myRef = database.getReference("Users").child(mAuth.getUid());
+
+
+                            //    if (email2.equals(admin)) {
+                            //        Intent goLog = new Intent(getApplicationContext(), AdminPage.class);
+                            //        startActivity(goLog);
+
+
+                            //    }
 
                             Intent go = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(go);
-                        }
 
 
-
-
-                        else {
-
-//                                // If sign in fails, display a message to the user.
-                            Log.w("TAG", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "Authentication failed.",
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(Login.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-//                                updateUI(null);
+
                         }
 
                         // ...
                     }
-                });
 
+                });
     }
 
-
-
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
 }

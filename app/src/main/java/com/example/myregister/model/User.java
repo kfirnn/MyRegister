@@ -1,4 +1,4 @@
-package com.example.myregister.models;
+package com.example.myregister.model;
 
 public class User {
     String id;

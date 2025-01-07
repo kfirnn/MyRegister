@@ -6,14 +6,11 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 
-import com.example.myregister.models.User;
+import com.example.myregister.model.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /// a service to interact with the Firebase Realtime Database.

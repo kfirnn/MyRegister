@@ -16,4 +16,25 @@
         <item>בני ברק</item>
 
     </string-array>
+
+    <string-array name="typeArr">
+      <item>חולצה</item>
+        <item>צעיף</item>
+            <item>תיק</item>
+
+    </string-array>
+    <string-array name="SizeArr">
+        <item>04</item>
+        <item>06</item>
+        <item>08</item>
+        <item>10</item>
+        <item>12</item>
+        <item>xs</item>
+        <item>s</item>
+        <item>m</item>
+        <item>l</item>
+        <item>xl</item>
+        <item>xxl</item>
+    </string-array>
+
 </resources>

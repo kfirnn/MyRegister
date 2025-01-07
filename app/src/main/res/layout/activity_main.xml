@@ -8,118 +8,41 @@
     android:background="#FBF3C8"
     tools:context=".screens.MainActivity">
 
-    <!-- ImageView - תמונה -->
-
-    <!-- Button - הרשמה -->
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FBF3C8"
-        tools:context=".screens.MainActivity">
-
-        <!-- ImageView - תמונה -->
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/registerButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/icon"
-            tools:ignore="ContentDescription" />
-
-        <!-- Button - הרשמה -->
-
-        <!-- Button - התחברות -->
-
-        <!-- Switch -->
-
-        <Button
-            android:id="@+id/registerButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:backgroundTint="#007bff"
-            android:padding="16dp"
-            android:text="הרשמה"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageView" />
-
-        <Button
-            android:id="@+id/loginButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="532dp"
-            android:backgroundTint="#007bff"
-            android:padding="16dp"
-            android:text="התחברות"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/registerButton" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="404dp"
-        android:layout_height="785dp"
-        app:layout_constraintBottom_toTopOf="@id/registerButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="411dp"
+        android:layout_height="400dp"
+        android:contentDescription="Logo"
         app:srcCompat="@mipmap/icon"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="2dp" />
 
     <Button
         android:id="@+id/registerButton"
-        android:layout_width="207dp"
-        android:layout_height="436dp"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
         android:backgroundTint="#007bff"
         android:padding="16dp"
         android:text="הרשמה"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="597dp" />
 
-    <!-- Button - התחברות -->
+
     <Button
         android:id="@+id/loginButton"
-        android:layout_width="204dp"
-        android:layout_height="86dp"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
         android:backgroundTint="#007bff"
         android:padding="16dp"
         android:text="התחברות"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/registerButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
-
-    <!-- Switch -->
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Switch"
-        app:layout_constraintTop_toBottomOf="@id/loginButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        tools:layout_editor_absoluteY="668dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
