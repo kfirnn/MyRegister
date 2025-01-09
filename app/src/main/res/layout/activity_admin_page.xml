@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E2DA9F"
+    tools:context=".screens.AdminPage">
+
+
+    <TextView
+        android:id="@+id/tvAdminTitle"
+        android:layout_width="191dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="75dp"
+        android:text="דף מנהל"
+        android:textColor="#FFFFFF"
+        android:textSize="44sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddItem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnAddItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="29dp"
+        android:backgroundTint="#8FBFDC"
+        android:padding="16dp"
+        android:text="הוסף פריט"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/btnUserList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAdminTitle" />
+
+    <Button
+        android:id="@+id/btnUserList"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="31dp"
+        android:backgroundTint="#8FBFDC"
+        android:padding="16dp"
+        android:text="רשימת משתמשים"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/btnOrderList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddItem" />
+
+    <Button
+        android:id="@+id/btnOrderList"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="26dp"
+        android:backgroundTint="#8FBFDC"
+        android:padding="16dp"
+        android:text="רשימת הזמנות"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnUserList" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="216dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="37dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnOrderList"
+        app:srcCompat="@mipmap/icon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

@@ -21,16 +21,16 @@
         android:id="@+id/etItemPrice"
         android:layout_width="356dp"
         android:layout_height="42dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginEnd="16dp"
         android:hint="Enter Price"
         android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.41" />
+        app:layout_constraintVertical_bias="0.407" />
 
     <Button
-        android:id="@+id/buttonSaveItem"
+        android:id="@+id/btnAddItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="73dp"
@@ -72,27 +72,27 @@
         app:layout_constraintTop_toBottomOf="@+id/spItemTYpe" />
 
     <Button
-        android:id="@+id/btnCamera"
+        android:id="@+id/btnTakePicD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="7dp"
-        android:layout_marginBottom="19dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="28dp"
         android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/btnGallery"
-        app:layout_constraintEnd_toEndOf="@+id/btnGallery" />
+        app:layout_constraintBottom_toTopOf="@+id/btnGalleryD"
+        app:layout_constraintEnd_toEndOf="@+id/btnGalleryD" />
 
     <Button
-        android:id="@+id/btnGallery"
+        android:id="@+id/btnGalleryD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="33dp"
-        android:layout_marginBottom="187dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginBottom="184dp"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/ivd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="27dp"

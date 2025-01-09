@@ -70,7 +70,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(this);
         etEmailLogin = findViewById(R.id.etEmailLog);
-        etPasswordLogin = findViewById(R.id.etPassword);
+        etPasswordLogin = findViewById(R.id.etPassLog);
     }
 
 
