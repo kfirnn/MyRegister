@@ -154,4 +154,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
     public void onNothingSelected(AdapterView<?> adapterView) {
      city= (String) adapterView.getItemAtPosition(0);
     }
+
+    public void onRegisterClick2(View view) {
+        Intent go=new Intent(getApplicationContext(),HomePage.class);
+        startActivity(go);
+    }
 }
+

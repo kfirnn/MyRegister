@@ -33,8 +33,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     String email2, pass2;
     private FirebaseAuth mAuth;
-    String admin = "kfirn5566@gmail.com";
-
+    String admin = "levyarin14@gmail.com";
+    String adminPass="010407";
     public static final String MyPREFERENCES = "MyPrefs";
 
 
@@ -79,52 +79,43 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         email2 = etEmailLogin.getText().toString();
         pass2 = etPasswordLogin.getText().toString();
 
-        mAuth.signInWithEmailAndPassword(email2, pass2)
+        Task<AuthResult> authResultTask = mAuth.signInWithEmailAndPassword(email2, pass2)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-
                             SharedPreferences.Editor editor = sharedpreferences.edit();
-
                             editor.putString("email", email2);
                             editor.putString("password", pass2);
-
                             editor.commit();
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             final FirebaseUser user = mAuth.getCurrentUser();
-
                             myRef = database.getReference("Users").child(mAuth.getUid());
 
-
-                            //    if (email2.equals(admin)) {
-                            //        Intent goLog = new Intent(getApplicationContext(), AdminPage.class);
-                            //        startActivity(goLog);
-
-
-                            //    }
-
-                            Intent go = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(go);
-
-
-                        } else {
+                            // Check if it's the admin credentials
+                            if (email2.equals(admin) && pass2.equals(adminPass)) {
+                                Intent goLog = new Intent(getApplicationContext(), AdminPage.class);
+                                isAdmin = true;
+                                startActivity(goLog);
+                            } else
+                            {
+                                Intent go = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(go);
+                            }
+                        }
+                        else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(Login.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-
                         }
-
-                        // ...
                     }
-
                 });
-    }
-
-    @Override
+}
+        @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
     }
