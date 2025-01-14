@@ -2,9 +2,73 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E2DA9F"
     tools:context=".screens.HomePage">
+
+    <!-- כותרת בראש המסך -->
+
+    <!-- כפתור מעבר לחנות -->
+
+    <!-- כפתור מעבר למשחקי הקבוצה -->
+
+    <!-- כפתור פרטי המשתמש -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="323dp"
+        android:layout_height="92dp"
+        android:gravity="center"
+        android:text="MaccabiZone"
+        android:textColor="#0A4875"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="44dp" />
+
+    <Button
+        android:id="@+id/btnShop"
+        android:layout_width="406dp"
+        android:layout_height="73dp"
+        android:backgroundTint="#8FBFDC"
+        android:text="חנות"
+        android:textColor="#0A4875"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="210dp" />
+
+    <Button
+        android:id="@+id/btnGames"
+        android:layout_width="406dp"
+        android:layout_height="73dp"
+        android:backgroundTint="#8FBFDC"
+        android:text="משחקי הקבוצה"
+        android:textColor="#0A4875"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="283dp" />
+
+    <Button
+        android:id="@+id/btnProfile"
+        android:layout_width="406dp"
+        android:layout_height="73dp"
+        android:backgroundTint="#8FBFDC"
+        android:text="הפרופיל שלי"
+        android:textColor="#0A4875"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="362dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="235dp"
+        android:layout_height="209dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnProfile"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@mipmap/icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

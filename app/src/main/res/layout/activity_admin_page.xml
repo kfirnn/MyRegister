@@ -31,6 +31,7 @@
         android:padding="16dp"
         android:text="הוסף פריט"
         android:textColor="#FFFFFF"
+        android:onClick="onAddItemClick"
         app:layout_constraintBottom_toTopOf="@+id/btnUserList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

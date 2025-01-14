@@ -21,6 +21,7 @@
       <item>חולצה</item>
         <item>צעיף</item>
             <item>תיק</item>
+        <item>מכנס</item>
 
     </string-array>
     <string-array name="SizeArr">
@@ -35,6 +36,11 @@
         <item>l</item>
         <item>xl</item>
         <item>xxl</item>
+    </string-array>
+    <string-array name="sub_category_array">
+        <item>קטגוריה 1</item>
+        <item>קטגוריה 2</item>
+        <item>קטגוריה 3</item>
     </string-array>
 
 </resources>

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,7 +26,7 @@ import com.example.myregister.utils.ImageUtil;
 
 public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
-    Spinner spinnertype;
+    Spinner spinnertype, spinnertypeSize;  // Spinner for sizes
 
     EditText etItemName, etPrice, etDescription;
     String itemName, stPrice, type;
@@ -38,14 +39,10 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
     Button btnGallery, btnTakePic, btnAddItem;
     ImageView iv;
 
-
-
     private ImageView foodImageView;
     private DatabaseService databaseService;
 
-    /// Activity result launcher for selecting image from gallery
     private ActivityResultLauncher<Intent> selectImageLauncher;
-    /// Activity result launcher for capturing image from camera
     private ActivityResultLauncher<Intent> captureImageLauncher;
 
     @Override
@@ -54,20 +51,14 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.activity_add_item);
         initViews();
 
-
-        /// request permission for the camera and storage
         ImageUtil.requestPermission(this);
 
-        /// get the instance of the database service
         databaseService = DatabaseService.getInstance();
 
         btnTakePic.setOnClickListener(this);
         btnAddItem.setOnClickListener(this);
         btnGallery.setOnClickListener(this);
 
-
-
-        /// register the activity result launcher for selecting image from gallery
         selectImageLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -77,7 +68,6 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                     }
                 });
 
-        /// register the activity result launcher for capturing image from camera
         captureImageLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -86,7 +76,6 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                         foodImageView.setImageBitmap(bitmap);
                     }
                 });
-
     }
 
     private void initViews() {
@@ -97,22 +86,41 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         iv = findViewById(R.id.ivd);
 
         spinnertype = findViewById(R.id.spItemTYpe);
+        spinnertypeSize = findViewById(R.id.spItemSize);  // Size spinner
 
         etItemName = findViewById(R.id.etItemName);
         etPrice = findViewById(R.id.etItemPrice);
+
+        // Initially hide the size spinner
+        spinnertypeSize.setVisibility(View.GONE);
+
+        // Set listener to show or hide size spinner based on item type
+        spinnertype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String selectedType = spinnertype.getSelectedItem().toString();
+
+                if (selectedType.equals("חולצה") || selectedType.equals("מכנס")) {
+                    spinnertypeSize.setVisibility(View.VISIBLE);  // Show size spinner
+                } else {
+                    spinnertypeSize.setVisibility(View.GONE);  // Hide size spinner
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // No item selected
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
         if (view == btnTakePic) {
-            // select image from gallery
-//            Log.d(TAG, "Select image button clicked");
             selectImageFromGallery();
             return;
         }
         if (view == btnGallery) {
-            // capture image from camera
-//            Log.d(TAG, "Capture image button clicked");
             captureImageFromCamera();
             return;
         }
@@ -121,6 +129,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
             dedc = etDescription.getText().toString();
             itemName = etItemName.getText().toString();
             stPrice = etPrice.getText().toString();
+
             if (foodImageView.getDrawable() == null) {
                 Toast.makeText(AddItem.this, "Please take pic!", Toast.LENGTH_SHORT).show();
                 return;
@@ -138,7 +147,6 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                 return;
             }
 
-
             String imageBase64 = ImageUtil.convertTo64Base(foodImageView);
 
             String itemid = databaseService.generateItemId();
@@ -147,28 +155,26 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
             databaseService.createNewItem(newItem, new DatabaseService.DatabaseCallback<Void>() {
                 @Override
                 public void onCompleted(Void object) {
-
+                    // handle completion
                 }
 
                 @Override
                 public void onFailed(Exception e) {
-
+                    // handle failure
                 }
             });
         }
     }
 
-    /// select image from gallery
     private void selectImageFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         selectImageLauncher.launch(intent);
     }
 
-    /// capture image from camera
     private void captureImageFromCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         captureImageLauncher.launch(takePictureIntent);
     }
-
-
 }
+
+
