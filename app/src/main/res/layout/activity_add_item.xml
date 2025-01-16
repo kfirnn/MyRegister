@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E2DA9F"
     android:orientation="vertical">
 
 
@@ -10,43 +11,41 @@
         android:id="@+id/etItemName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="22dp"
+        android:layout_marginTop="91dp"
         android:hint="Enter Name"
         android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@+id/spItemTYpe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etItemPrice"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="27dp"
-        android:layout_marginEnd="27dp"
-        android:layout_marginBottom="26dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginBottom="48dp"
         android:hint="Enter Price"
         android:inputType="numberDecimal"
-        app:layout_constraintBottom_toTopOf="@+id/etDescription"
+        app:layout_constraintBottom_toBottomOf="@+id/etDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spItemTYpe" />
+        app:layout_constraintTop_toTopOf="@+id/spItemTYpe" />
 
     <Button
         android:id="@+id/btnAddItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="73dp"
+        android:backgroundTint="#3F51B5"
         android:text="Save Item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGalleryD" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="114dp"
-        android:layout_height="0dp"
+        android:layout_height="53dp"
         android:layout_marginStart="125dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="22dp"
@@ -59,9 +58,8 @@
         android:id="@+id/spItemTYpe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="22dp"
         android:entries="@array/typeArr"
-        app:layout_constraintBottom_toTopOf="@+id/etItemPrice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etItemName" />
@@ -81,32 +79,30 @@
         android:id="@+id/btnTakePicD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
+        android:backgroundTint="#3F51B5"
         android:text="גלריה"
         app:layout_constraintBottom_toTopOf="@+id/btnGalleryD"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivd"
-        app:layout_constraintTop_toBottomOf="@+id/etDescription" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/btnGalleryD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="124dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="246dp"
+        android:backgroundTint="#3F51B5"
         android:text="מצלמה"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddItem"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivd"
-        app:layout_constraintTop_toBottomOf="@+id/btnTakePicD" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/ivd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="5dp"
-        app:layout_constraintEnd_toStartOf="@+id/btnTakePicD"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etDescription"
         tools:srcCompat="@tools:sample/avatars" />
@@ -114,15 +110,12 @@
     <EditText
         android:id="@+id/etDescription"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="29dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="60dp"
         android:ems="10"
         android:hint="Description"
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/btnTakePicD"
-        app:layout_constraintEnd_toEndOf="@+id/btnTakePicD"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etItemPrice" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
