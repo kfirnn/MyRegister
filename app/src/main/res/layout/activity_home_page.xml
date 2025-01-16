@@ -16,48 +16,68 @@
     <!-- כפתור פרטי המשתמש -->
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="323dp"
-        android:layout_height="92dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="74dp"
         android:gravity="center"
         android:text="MaccabiZone"
         android:textColor="#0A4875"
         android:textSize="50sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="44dp"
-        tools:layout_editor_absoluteY="44dp" />
+        app:layout_constraintBottom_toTopOf="@+id/btnShop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnShop"
-        android:layout_width="406dp"
-        android:layout_height="73dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
         android:backgroundTint="#8FBFDC"
         android:text="חנות"
         android:textColor="#0A4875"
         android:textSize="30sp"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="210dp" />
+        app:layout_constraintBottom_toTopOf="@+id/btnGames"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <Button
         android:id="@+id/btnGames"
-        android:layout_width="406dp"
-        android:layout_height="73dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="6dp"
         android:backgroundTint="#8FBFDC"
         android:text="משחקי הקבוצה"
         android:textColor="#0A4875"
         android:textSize="30sp"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="283dp" />
+        app:layout_constraintBottom_toTopOf="@+id/btnProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnShop" />
 
     <Button
         android:id="@+id/btnProfile"
-        android:layout_width="406dp"
-        android:layout_height="73dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="296dp"
         android:backgroundTint="#8FBFDC"
         android:text="הפרופיל שלי"
         android:textColor="#0A4875"
         android:textSize="30sp"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="362dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGames" />
 
     <ImageView
         android:id="@+id/imageView2"

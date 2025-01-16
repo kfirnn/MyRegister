@@ -102,7 +102,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                                 startActivity(goLog);
                             } else
                             {
-                                Intent go = new Intent(getApplicationContext(), MainActivity.class);
+                                Intent go = new Intent(getApplicationContext(), HomePage.class);
                                 startActivity(go);
                             }
                         }
@@ -118,5 +118,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+    public void onGobackClick2(View view) {
+        Intent go=new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(go);
     }
 }

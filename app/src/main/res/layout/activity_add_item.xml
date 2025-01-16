@@ -10,24 +10,27 @@
         android:id="@+id/etItemName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="115dp"
+        android:layout_marginBottom="22dp"
         android:hint="Enter Name"
         android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/spItemTYpe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/etItemPrice"
-        android:layout_width="356dp"
-        android:layout_height="42dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginBottom="26dp"
         android:hint="Enter Price"
         android:inputType="numberDecimal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/etDescription"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.407" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spItemTYpe" />
 
     <Button
         android:id="@+id/btnAddItem"
@@ -37,15 +40,18 @@
         android:text="Save Item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGalleryD" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="114dp"
-        android:layout_height="46dp"
+        android:layout_height="0dp"
         android:layout_marginStart="125dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="22dp"
         android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/etItemName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,8 +59,9 @@
         android:id="@+id/spItemTYpe"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="16dp"
         android:entries="@array/typeArr"
+        app:layout_constraintBottom_toTopOf="@+id/etItemPrice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etItemName" />
@@ -63,42 +70,59 @@
         android:id="@+id/spItemSize"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginEnd="1dp"
         android:entries="@array/SizeArr"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/spItemTYpe" />
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnTakePicD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="28dp"
-        android:text="Button"
+        android:layout_marginBottom="32dp"
+        android:text="גלריה"
         app:layout_constraintBottom_toTopOf="@+id/btnGalleryD"
-        app:layout_constraintEnd_toEndOf="@+id/btnGalleryD" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivd"
+        app:layout_constraintTop_toBottomOf="@+id/etDescription" />
 
     <Button
         android:id="@+id/btnGalleryD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="52dp"
-        android:layout_marginBottom="184dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginBottom="124dp"
+        android:text="מצלמה"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddItem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivd"
+        app:layout_constraintTop_toBottomOf="@+id/btnTakePicD" />
 
     <ImageView
         android:id="@+id/ivd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="27dp"
-        android:layout_marginTop="35dp"
-        app:layout_constraintStart_toStartOf="@+id/etItemPrice"
-        app:layout_constraintTop_toBottomOf="@+id/etItemPrice"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnTakePicD"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etDescription"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <EditText
+        android:id="@+id/etDescription"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="29dp"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/btnTakePicD"
+        app:layout_constraintEnd_toEndOf="@+id/btnTakePicD"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etItemPrice" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -159,5 +159,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
         Intent go=new Intent(getApplicationContext(),HomePage.class);
         startActivity(go);
     }
+
+    public void onGobackClick(View view) {
+        Intent go=new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(go);
+    }
 }
 

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -39,11 +40,15 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
     Button btnGallery, btnTakePic, btnAddItem;
     ImageView iv;
 
-    private ImageView foodImageView;
+
     private DatabaseService databaseService;
 
     private ActivityResultLauncher<Intent> selectImageLauncher;
     private ActivityResultLauncher<Intent> captureImageLauncher;
+
+    // constant to compare
+    // the activity result code
+    int SELECT_PICTURE = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +69,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                 result -> {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                         Uri selectedImage = result.getData().getData();
-                        foodImageView.setImageURI(selectedImage);
+                        iv.setImageURI(selectedImage);
                     }
                 });
 
@@ -73,7 +78,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                 result -> {
                     if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                         Bitmap bitmap = (Bitmap) result.getData().getExtras().get("data");
-                        foodImageView.setImageBitmap(bitmap);
+                        iv.setImageBitmap(bitmap);
                     }
                 });
     }
@@ -90,6 +95,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
         etItemName = findViewById(R.id.etItemName);
         etPrice = findViewById(R.id.etItemPrice);
+        etDescription=findViewById(R.id.etDescription);
 
         // Initially hide the size spinner
         spinnertypeSize.setVisibility(View.GONE);
@@ -126,11 +132,13 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
         }
         if (view == btnAddItem) {
             type = spinnertype.getSelectedItem().toString();
-            dedc = etDescription.getText().toString();
+            dedc = etDescription.getText().toString()+"";
             itemName = etItemName.getText().toString();
             stPrice = etPrice.getText().toString();
 
-            if (foodImageView.getDrawable() == null) {
+
+
+            if (iv.getDrawable() == null) {
                 Toast.makeText(AddItem.this, "Please take pic!", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -147,7 +155,7 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                 return;
             }
 
-            String imageBase64 = ImageUtil.convertTo64Base(foodImageView);
+            String imageBase64 = ImageUtil.convertTo64Base(iv);
 
             String itemid = databaseService.generateItemId();
 
@@ -156,11 +164,18 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
                 @Override
                 public void onCompleted(Void object) {
                     // handle completion
+
+                    Log.d("TAG", "Food added successfully");
+                    Toast.makeText(AddItem.this, "Item added successfully", Toast.LENGTH_SHORT).show();
+
                 }
 
                 @Override
                 public void onFailed(Exception e) {
                     // handle failure
+                    Log.e("TAG", "Failed to add food", e);
+                    Toast.makeText(AddItem.this, "Failed to add Item", Toast.LENGTH_SHORT).show();
+
                 }
             });
         }
@@ -169,12 +184,50 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
     private void selectImageFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         selectImageLauncher.launch(intent);
+
+        imageChooser();
+
     }
 
     private void captureImageFromCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         captureImageLauncher.launch(takePictureIntent);
     }
+
+    void imageChooser() {
+
+        // create an instance of the
+        // intent of the type image
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+
+        // pass the constant to compare it
+        // with the returned requestCode
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+    }
+
+    // this function is triggered when user
+    // selects the image from the imageChooser
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+
+            // compare the resultCode with the
+            // SELECT_PICTURE constant
+            if (requestCode == SELECT_PICTURE) {
+                // Get the url of the image from data
+                Uri selectedImageUri = data.getData();
+                if (null != selectedImageUri) {
+                    // update the preview image in the layout
+                    iv.setImageURI(selectedImageUri);
+                }
+            }
+        }
+    }
+
+
 }
 
 
