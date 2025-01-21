@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#FBF3C8"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -29,8 +30,8 @@
                 android:layout_marginEnd="54dp"
                 android:gravity="center"
                 android:text="חנות"
-                android:textColor="#000000"
-                android:textSize="50dp"
+                android:textColor="#0A4875"
+                android:textSize="40dp"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -70,25 +71,27 @@
 
             <Button
                 android:id="@+id/btnSearchItems"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#EADD6F"
-                android:textColor="@color/black"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp"
-                android:text="חפשי" />
+                android:textColor="#0A4875"
+                android:textSize="17sp"
+                android:backgroundTint="#8FBFDC"
+                android:text="חיפוש" />
 
             <Button
                 android:id="@+id/btnAllItems"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#EADD6F"
-                android:textColor="@color/black"
-                android:textStyle="bold"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
                 android:layout_marginBottom="10dp"
-                android:text="הראה הכל" />
+                android:text="הראה הכל"
+                android:textColor="#0A4875"
+                android:backgroundTint="#8FBFDC"
+                android:textSize="17sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout

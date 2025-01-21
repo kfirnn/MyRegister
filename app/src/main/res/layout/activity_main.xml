@@ -14,47 +14,46 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="2dp"
-        android:layout_marginBottom="195dp"
+        android:layout_marginBottom="182dp"
         android:contentDescription="Logo"
-        app:layout_constraintBottom_toTopOf="@+id/registerButton"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/icon"
         tools:ignore="ContentDescription" />
 
+
     <Button
         android:id="@+id/registerButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
-        android:backgroundTint="#007bff"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#8FBFDC"
+        android:onClick="onRegisterClick"
         android:padding="16dp"
         android:text="הרשמה"
-        android:textColor="#FFFFFF"
+        android:textColor="#0A4875"
         android:textSize="20sp"
-        android:onClick="onRegisterClick"
-       app:layout_constraintBottom_toTopOf="@+id/loginButton"
-       app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
-        android:backgroundTint="#007bff"
+        android:layout_marginBottom="14dp"
+        android:backgroundTint="#8FBFDC"
+        android:onClick="onLoginClick2"
         android:padding="16dp"
         android:text="התחברות"
-        android:textColor="#FFFFFF"
+        android:textColor="#0A4875"
         android:textSize="20sp"
-        android:onClick="onLoginClick2"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/registerButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerButton" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

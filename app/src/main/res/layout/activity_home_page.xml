@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E2DA9F"
+    android:background="#FBF3C8"
     tools:context=".screens.HomePage">
 
     <!-- כותרת בראש המסך -->
@@ -34,14 +34,14 @@
 
     <Button
         android:id="@+id/btnShop"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="400dp"
+        android:layout_height="60dp"
         android:layout_marginStart="2dp"
         android:layout_marginEnd="2dp"
         android:backgroundTint="#8FBFDC"
         android:text="חנות"
         android:textColor="#0A4875"
-        android:textSize="30sp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toTopOf="@+id/btnGames"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,15 +49,15 @@
 
     <Button
         android:id="@+id/btnGames"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="400dp"
+        android:layout_height="60dp"
         android:layout_marginStart="2dp"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="6dp"
         android:backgroundTint="#8FBFDC"
         android:text="משחקי הקבוצה"
         android:textColor="#0A4875"
-        android:textSize="30sp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toTopOf="@+id/btnProfile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,15 +65,15 @@
 
     <Button
         android:id="@+id/btnProfile"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="400dp"
+        android:layout_height="60dp"
         android:layout_marginStart="2dp"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="296dp"
         android:backgroundTint="#8FBFDC"
         android:text="הפרופיל שלי"
         android:textColor="#0A4875"
-        android:textSize="30sp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
