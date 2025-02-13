@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#FBF3C8"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/itemImageView"
+        android:layout_width="112dp"
+        android:layout_height="103dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Item Image"
+        android:srcCompat="@tools:sample/avatars"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- TextView for the item type -->
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:textColor="#0A4875"
+
+        android:text="Item Name"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/itemImageView"
+        app:layout_constraintTop_toTopOf="@+id/itemImageView" />
+
+    <TextView
+        android:id="@+id/typeTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Type: "
+        android:textColor="#0A4875"
+
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/itemImageView"
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+
+    <!-- TextView for the item size -->
+    <TextView
+        android:id="@+id/sizeTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="#0A4875"
+
+        android:text="Size: "
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/itemImageView"
+        app:layout_constraintTop_toBottomOf="@+id/typeTextView" />
+
+    <!-- TextView for the item price -->
+    <TextView
+        android:id="@+id/priceTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Price: "
+        android:textColor="#0A4875"
+
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/itemImageView"
+        app:layout_constraintTop_toBottomOf="@+id/sizeTextView" />
+
+    <!-- Button for more information -->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

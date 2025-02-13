@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+
+    android:background="#FBF3C8">
+
+
+    <TextView
+        android:id="@+id/tvFname"
+        android:layout_width="175dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="12dp"
+
+        android:layout_marginTop="14dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="FName:"
+        android:textColor="#0A4875"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvLname"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLname"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="9dp"
+
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Lname: "
+        android:textColor="#0A4875"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvPhone"
+        app:layout_constraintEnd_toEndOf="@+id/tvFname"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFname" />
+
+    <TextView
+        android:id="@+id/tvPhone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="5dp"
+
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Phone: "
+        android:textColor="#0A4875"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tvFname"
+        app:layout_constraintStart_toStartOf="@+id/tvLname"
+        app:layout_constraintTop_toBottomOf="@+id/tvLname" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
