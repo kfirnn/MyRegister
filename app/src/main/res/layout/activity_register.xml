@@ -89,16 +89,15 @@
     <Button
         android:id="@+id/btnReg"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="65dp"
         android:backgroundTint="#8FBFDC"
         android:onClick="onRegisterClick2"
         android:text="Register"
         android:textColor="#0A4875"
         android:textSize="17sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnGoback"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />
@@ -114,18 +113,4 @@
         app:layout_constraintStart_toStartOf="@+id/etPhone"
         app:layout_constraintTop_toBottomOf="@+id/etPhone" />
 
-    <Button
-        android:id="@+id/btnGoback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginBottom="21dp"
-        android:backgroundTint="#8FBFDC"
-        android:onClick="onGobackClick2"
-        android:text="Back"
-        android:textColor="#0A4875"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnReg" />
 </androidx.constraintlayout.widget.ConstraintLayout>

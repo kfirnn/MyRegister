@@ -33,7 +33,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     String email2, pass2;
     private FirebaseAuth mAuth;
-    String admin = "levyarin14@gmail.com";
+    public static final String admin = "levyarin14@gmail.com";
     String adminPass="010407";
     public static final String MyPREFERENCES = "MyPrefs";
 
@@ -79,7 +79,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         email2 = etEmailLogin.getText().toString();
         pass2 = etPasswordLogin.getText().toString();
 
-        Task<AuthResult> authResultTask = mAuth.signInWithEmailAndPassword(email2, pass2)
+        mAuth.signInWithEmailAndPassword(email2, pass2)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -115,12 +115,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     }
                 });
 }
-        @Override
+    @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
-    }
-    public void onGobackClick2(View view) {
-        Intent go=new Intent(getApplicationContext(),MainActivity.class);
-        startActivity(go);
     }
 }

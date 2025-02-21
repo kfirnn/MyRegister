@@ -4,82 +4,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="#FBF3C8"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/itemImageView"
-        android:layout_width="112dp"
-        android:layout_height="103dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="Item Image"
-        android:srcCompat="@tools:sample/avatars"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <!-- TextView for the item type -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/nameTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:ellipsize="end"
-        android:textStyle="bold"
-        android:maxLines="1"
-        android:textColor="#0A4875"
+            <TextView
+                android:id="@+id/tvATiTle"
+                android:layout_width="306dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="54dp"
+                android:layout_marginEnd="54dp"
+                android:gravity="center"
+                android:text="חנות"
+                android:textColor="#0A4875"
+                android:textSize="40dp"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
 
-        android:text="Item Name"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/itemImageView"
-        app:layout_constraintTop_toTopOf="@+id/itemImageView" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/typeTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="Type: "
-        android:textColor="#0A4875"
+            <Spinner
+                android:id="@+id/spSubCategory5"
+                android:layout_width="188dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
 
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/itemImageView"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+            <Spinner
+                android:id="@+id/spinnertype"
+                android:layout_width="130dp"
+                android:layout_height="50dp" />
 
-    <!-- TextView for the item size -->
-    <TextView
-        android:id="@+id/sizeTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textColor="#0A4875"
+            <EditText
+                android:id="@+id/etSearchItem"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:inputType="textPersonName"
+                />
 
-        android:text="Size: "
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/itemImageView"
-        app:layout_constraintTop_toBottomOf="@+id/typeTextView" />
+        </LinearLayout>
 
-    <!-- TextView for the item price -->
-    <TextView
-        android:id="@+id/priceTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="Price: "
-        android:textColor="#0A4875"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/itemImageView"
-        app:layout_constraintTop_toBottomOf="@+id/sizeTextView" />
+            <Button
+                android:id="@+id/btnSearchItems"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:textColor="#0A4875"
+                android:textSize="17sp"
+                android:backgroundTint="#8FBFDC"
+                android:text="חיפוש" />
 
-    <!-- Button for more information -->
+            <Button
+                android:id="@+id/btnAllItems"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginBottom="10dp"
+                android:text="הראה הכל"
+                android:textColor="#0A4875"
+                android:backgroundTint="#8FBFDC"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ListView
+                android:id="@+id/lvItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,16 +4,12 @@ import static com.example.myregister.R.*;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.myregister.R;
 
 public class HomePage extends AppCompatActivity {
-
-
 
     public Button btnShop, btnGames, btnProfile;
 
@@ -30,7 +26,7 @@ public class HomePage extends AppCompatActivity {
             // מאזין לכפתור "חנות"
             btnShop.setOnClickListener(v -> {
                 // עבור לדף החנות (כמובן שתצטרך ליצור את העמוד הזה)
-                Intent intent = new Intent(HomePage.this, SearchItem.class);
+                Intent intent = new Intent(HomePage.this, StoreActivity.class);
                 startActivity(intent);
             });
 
