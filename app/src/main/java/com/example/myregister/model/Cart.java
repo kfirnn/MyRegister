@@ -4,78 +4,48 @@ import java.util.ArrayList;
 import java.util.List;
 import androidx.annotation.NonNull;
 
-public class Cart {
+import java.io.Serializable;
 
-    /// unique id of the cart
-    private String id;
 
-    private final ArrayList<Item> items;
+public class Cart implements Serializable {
+
+    private List<Item> items;
+
+    public Cart( List<Item> items) {
+
+        this.items = items;
+    }
 
     public Cart() {
-        items = new ArrayList<>();
+        this.items = items;
     }
 
-    public Cart(String id) {
-        this.id = id;
-        items = new ArrayList<>();
-    }
+    public void addItem(Item item) {
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void addFood(Item item) {
-        items.add(item);
-    }
-
-    public void addFoods(List<Item> foods) {
-        this.items.addAll(foods);
-    }
-
-    public boolean removeFood(Item food) {
-        return items.remove(food);
-    }
-
-    public Item removeItem(int index) {
-        if (index < 0 || index >= items.size()) {
-            return null;
+        if(this.items==null){
+            this.items=new ArrayList<>();
         }
-        return items.remove(index);
+        this.items.add(item);
     }
 
-    public Item getFood(int index) {
-        if (index < 0 || index >= items.size()) {
-            return null;
-        }
-        return items.get(index);
+    public List<Item> getItems() {
+        return this.items;
     }
 
-    public ArrayList<Item> getFoods() {
-        return items;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
-    public double getTotalPrice() {
-        double totalPrice = 0;
-        for (Item item : items) {
-            totalPrice += item.getPrice();  // תיקון כאן
-        }
-        return totalPrice;
+    public void removeItem(int index) {
+        this.items.remove(index);
     }
 
-    public void clear() {
-        items.clear();
-    }
 
-    @NonNull
     @Override
     public String toString() {
         return "Cart{" +
-                "id='" + id + '\'' +
-                ", items=" + items +
+
+                ", items=" +this.items +
                 '}';
     }
 }

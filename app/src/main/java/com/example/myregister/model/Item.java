@@ -1,64 +1,125 @@
 package com.example.myregister.model;
+import java.io.Serializable;  // הוספתי את ה-Serializable
 
-public class Item {
-    String id,name,type,img,size;
-    Double price;
 
-    public Item(String id, String name, String type, String img, String size, Double price) {
+public class Item implements Serializable {  // הוספתי את ה-Serializable פה
+
+    protected String id;
+
+    protected String name;
+    protected String type;
+    protected String color;
+    protected String company;
+    protected String aboutItem;
+    protected double price;
+    protected String pic;
+    protected int numberRate;
+    protected double rate;
+    protected double sumRate;
+
+    public Item(String itemid, String itemName, String type, String imageBase64, String dedc, double price) {
+    }
+
+    public Item(String id, String name, String type, String color, String company, String aboutItem, double price, String pic, int numberRate, double rate, double sumRate) {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.img = img;
-        this.size = size;
+        this.color = color;
+        this.company = company;
+        this.aboutItem = aboutItem;
         this.price = price;
+        this.pic = pic;
+        this.numberRate = numberRate;
+        this.rate = rate;
+        this.sumRate = sumRate;
     }
 
     public String getId() {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getAboutItem() {
+        return aboutItem;
+    }
+
+    public void setAboutItem(String aboutItem) {
+        this.aboutItem = aboutItem;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
+
+    public int getNumberRate() {
+        return numberRate;
+    }
+
+    public void setNumberRate(int numberRate) {
+        this.numberRate = numberRate;
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
+    public double getSumRate() {
+        return sumRate;
+    }
+
+    public void setSumRate(double sumRate) {
+        this.sumRate = sumRate;
     }
 
     @Override
@@ -67,9 +128,13 @@ public class Item {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
-                ", img='" + img + '\'' +
-                ", size='" + size + '\'' +
+                ", color='" + color + '\'' +
+                ", company='" + company + '\'' +
+                ", aboutItem='" + aboutItem + '\'' +
                 ", price=" + price +
+                ", numberRate=" + numberRate +
+                ", rate=" + rate +
+                ", sumRate=" + sumRate +
                 '}';
     }
 }

@@ -1,5 +1,7 @@
 package com.example.myregister.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,65 +15,67 @@ import com.example.myregister.utils.ImageUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
+    private List<Item> itemsList;
+    private Context context;
 
-    private final List<Item> itemList;
-
-    public ItemAdapter() {
-        itemList = new ArrayList<>();
-    }
-
-    public void addItems(@NonNull List<Item> items) {
-        for (Item item : items) {
-            addItem(item);
-        }
-    }
-
-    public void addItem(Item item) {
-        if (item == null) return;
-
-        itemList.add(item);
-        notifyItemInserted(itemList.size() - 1);
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_item_list, parent, false);
-        return new ViewHolder(view);
+    public ItemAdapter(List<Item> itemsList, Context context) {
+        this.itemsList = itemsList;
+        this.context = context;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Item item = itemList.get(position);
-        if (item == null) return;
-
-        holder.nameTextView.setText(item.getName());
-        holder.typeTextView.setText("Type: " + item.getType());
-        holder.sizeTextView.setText("Size: " + item.getSize());
-        holder.priceTextView.setText("Price: " + item.getPrice());
-
-        holder.itemImageView.setImageBitmap(ImageUtil.convertFrom64base(item.getImg())); // מתקן לתמונה מבסיס 64
+    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_store, parent, false);
+        return new ItemViewHolder(view);
     }
+
+    @Override
+    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+        Item item = itemsList.get(position);
+        holder.bindItem(item);
+    }
+
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return itemsList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView nameTextView, typeTextView, sizeTextView, priceTextView;
-        public final ImageView itemImageView;
+    public class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        public ViewHolder(View itemView) {
+        private ImageView iv;
+        private TextView name;
+        private TextView price;
+        // private Button addToCartButton;
+
+        public ItemViewHolder(View itemView) {
             super(itemView);
-            nameTextView = itemView.findViewById(R.id.nameTextView);
-            typeTextView = itemView.findViewById(R.id.typeTextView);
-            sizeTextView = itemView.findViewById(R.id.sizeTextView);
-            priceTextView = itemView.findViewById(R.id.priceTextView);
-            itemImageView = itemView.findViewById(R.id.itemImageView);
+            iv = itemView.findViewById(R.id.itemImageView);
+            name = itemView.findViewById(R.id.nameTextView);
+            price = itemView.findViewById(R.id.priceTextView);
+            //   addToCartButton = itemView.findViewById(R.id.addToCartButton);
+
+            // הוספת לחיצה על כל מוצר כדי להוביל לדף המידע של המוצר
+            itemView.setOnClickListener(v -> {
+                Item item = itemsList.get(getAdapterPosition());  // מקבל את המוצר שנלחץ
+                // Intent intent = new Intent(context, ItemDetailActivity.class);
+                //  intent.putExtra("itemId", item.getId()); // שולח את ה-ID של המוצר
+                //   context.startActivity(intent);
+            });
+        }
+
+        public void bindItem(Item item) {
+            iv.setImageBitmap(ImageUtil.convertFrom64base(item.getImg()));
+            name.setText(item.getName());
+            price.setText("₪" + item.getPrice());
+
+            //    addToCartButton.setOnClickListener(v -> {
+            //        ((RecyclerViewActivity) context).addItemToCart(item); // הוספת המוצר לעגלה
+            //   });
         }
     }
 }
+
 
 

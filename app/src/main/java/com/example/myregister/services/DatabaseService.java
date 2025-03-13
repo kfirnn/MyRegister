@@ -162,7 +162,7 @@ public class DatabaseService {
     /// @see DatabaseCallback
     /// @see Cart
     public void createNewCart(@NotNull final Cart cart, @Nullable final DatabaseCallback<Void> callback) {
-        writeData("carts/" + cart.getId(), cart, callback);
+        writeData("carts/" + cart.getItems(), cart, callback);
     }
 
 

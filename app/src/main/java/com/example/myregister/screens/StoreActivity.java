@@ -10,8 +10,13 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myregister.R;
+import com.example.myregister.adapters.ItemAdapter;
+import com.example.myregister.model.Item;
+import com.example.myregister.services.DatabaseService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,35 +27,56 @@ public class StoreActivity extends AppCompatActivity {
     private Spinner spSubCategory5, spinnertype;
     private EditText etSearchItem;
     private Button btnSearchItems, btnAllItems;
-    private ListView lvItem;
+    private RecyclerView rcItems;
 
-    private List<String> itemsList; // רשימה שתכיל את כל הפריטים
-    private ArrayAdapter<String> itemsAdapter; // אדפטר עבור רשימת הפריטים
+    private List<Item> itemsList=new ArrayList<>(); // רשימה שתכיל את כל הפריטים
+    private ItemAdapter itemsAdapter; // אדפטר עבור רשימת הפריטים
 
+
+    DatabaseService databaseService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store);
 
-        // אתחול האלמנטים
-        spSubCategory5 = findViewById(R.id.spSubCategory5);
-        spinnertype = findViewById(R.id.spinnertype);
-        etSearchItem = findViewById(R.id.etSearchItem);
-        btnSearchItems = findViewById(R.id.btnSearchItems);
-        btnAllItems = findViewById(R.id.btnAllItems);
-        lvItem = findViewById(R.id.lvItem);
+        databaseService=DatabaseService.getInstance();
 
-        // אתחול הרשימה
-        itemsList = new ArrayList<>();
-        itemsList.add("חולצה");
-        itemsList.add("מכנסיים");
-        itemsList.add("צעיף");
-        itemsList.add("כובע");
-        itemsList.add("תיק");
+        initViews();
+
+
 
         // אתחול האדפטר לרשימה
-        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemsList);
-        lvItem.setAdapter(itemsAdapter);
+          itemsAdapter = new ItemAdapter(itemsList,  StoreActivity.this);
+
+        rcItems.setLayoutManager(new LinearLayoutManager(this));
+
+        rcItems.setAdapter(itemsAdapter);
+
+
+
+        databaseService.getItems(new DatabaseService.DatabaseCallback<List<Item>>() {
+            @Override
+         public    void onCompleted(List<Item> object) {
+
+                itemsList.addAll(object);
+
+
+                itemsAdapter.notifyDataSetChanged();
+
+
+
+
+
+            }
+
+            @Override
+          public    void onFailed(Exception e) {
+
+            }
+        });
+
+
+
 
         // אתחול Spinner של קטגוריות משנה
         ArrayAdapter<CharSequence> subCategoryAdapter = ArrayAdapter.createFromResource(this,
@@ -81,34 +107,45 @@ public class StoreActivity extends AppCompatActivity {
         });
 
         // מאזין לבחירת פריט ב-ListView
-        lvItem.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedItem = itemsList.get(position);
-            Toast.makeText(StoreActivity.this, "נבחר: " + selectedItem, Toast.LENGTH_SHORT).show();
+//        lvItem.setOnItemClickListener((parent, view, position, id) -> {
+//            String selectedItem = itemsList.get(position);
+//            Toast.makeText(StoreActivity.this, "נבחר: " + selectedItem, Toast.LENGTH_SHORT).show();
+//
+//            Intent intent = new Intent(StoreActivity.this, ShowSpecificItemsActivity.class);
+//            intent.putExtra("selectedItem", selectedItem);
+//            startActivity(intent);
+//        });
 
-            Intent intent = new Intent(StoreActivity.this, ShowSpecificItemsActivity.class);
-            intent.putExtra("selectedItem", selectedItem);
-            startActivity(intent);
-        });
+    }
 
+    private void initViews() {
+
+        // אתחול האלמנטים
+        spSubCategory5 = findViewById(R.id.spSubCategory5);
+        spinnertype = findViewById(R.id.spinnertype);
+        etSearchItem = findViewById(R.id.etSearchItem);
+        btnSearchItems = findViewById(R.id.btnSearchItems);
+        btnAllItems = findViewById(R.id.btnAllItems);
+        rcItems = findViewById(R.id.rcItems);
     }
 
     // פונקציה לחיפוש פריטים ברשימה
     private void searchItems(String query) {
-        List<String> searchResults = new ArrayList<>();
-        for (String item : itemsList) {
-            if (item.toLowerCase().contains(query.toLowerCase())) {
+        List<Item> searchResults = new ArrayList<>();
+        for (Item item : itemsList) {
+            if (item.getName().toLowerCase().contains(query.toLowerCase())) {
                 searchResults.add(item);
             }
         }
-        itemsAdapter.clear();
-        itemsAdapter.addAll(searchResults);
+        itemsList.clear();
+        itemsList.addAll(searchResults);
         itemsAdapter.notifyDataSetChanged();
     }
 
     // פונקציה להציג את כל הפריטים
     private void showAllItems() {
-        itemsAdapter.clear();
-        itemsAdapter.addAll(itemsList);
+        itemsList.clear();
+        itemsList.addAll(itemsList);
         itemsAdapter.notifyDataSetChanged();
     }
 }

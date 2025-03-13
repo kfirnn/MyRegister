@@ -37,9 +37,7 @@ public class MainActivity extends AppCompatActivity {
             if (email.equals(Login.admin)) {
                 intent = new Intent(this, AdminPage.class);
             }
-            startActivity(intent);
-            finish();
-            return;
+
         }
     }
 
