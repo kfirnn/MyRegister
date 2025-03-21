@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MyRegister"
         tools:targetApi="31">
         <activity
+            android:name=".screens.ShowUsers"
+            android:exported="false" />
+        <activity
             android:name=".screens.CartActivity"
             android:exported="false" />
         <activity

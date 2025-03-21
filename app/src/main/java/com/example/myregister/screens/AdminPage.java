@@ -25,4 +25,8 @@ public class AdminPage extends AppCompatActivity {
         Intent go=new Intent(getApplicationContext(),AddItem.class);
         startActivity(go);
     }
+    public void btnUserList(View view) {
+        Intent go=new Intent(getApplicationContext(),ShowUsers.class);
+        startActivity(go);
+    }
 }

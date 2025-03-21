@@ -54,6 +54,7 @@
         android:text="רשימת משתמשים"
         android:textColor="#0A4875"
         android:textSize="17sp"
+        android:onClick="btnUserList"
         app:layout_constraintBottom_toTopOf="@+id/btnOrderList"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.425"
