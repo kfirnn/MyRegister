@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myregister.R;
 import com.example.myregister.model.User;
+import com.example.myregister.screens.ShowUsers;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     /// @see User
     private final List<User> userList;
 
-    public UserAdapter(List<User> userList) {
+    public UserAdapter(List<User> userList, ShowUsers showUsers) {
         this.userList = userList;
     }
 

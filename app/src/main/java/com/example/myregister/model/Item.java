@@ -8,31 +8,26 @@ public class Item implements Serializable {  // הוספתי את ה-Serializabl
 
     protected String name;
     protected String type;
-    protected String color;
-    protected String company;
+
+
     protected String aboutItem;
     protected double price;
     protected String pic;
-    protected int numberRate;
-    protected double rate;
-    protected double sumRate;
 
-    public Item(String itemid, String itemName, String type, String imageBase64, String dedc, double price) {
+
+    public Item() {
     }
 
-    public Item(String id, String name, String type, String color, String company, String aboutItem, double price, String pic, int numberRate, double rate, double sumRate) {
+    public Item(String id, String name, String type, String pic, String  aboutItem, double price) {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.color = color;
-        this.company = company;
         this.aboutItem = aboutItem;
         this.price = price;
         this.pic = pic;
-        this.numberRate = numberRate;
-        this.rate = rate;
-        this.sumRate = sumRate;
     }
+
+
 
     public String getId() {
         return id;
@@ -58,20 +53,15 @@ public class Item implements Serializable {  // הוספתי את ה-Serializabl
         this.type = type;
     }
 
-    public String getCompany() {
-        return company;
+
+
+
+    public String getAboutItem() {
+        return aboutItem;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
+    public void setAboutItem(String aboutItem) {
+        this.aboutItem = aboutItem;
     }
 
     public double getPrice() {
@@ -82,14 +72,6 @@ public class Item implements Serializable {  // הוספתי את ה-Serializabl
         this.price = price;
     }
 
-    public String getAboutItem() {
-        return aboutItem;
-    }
-
-    public void setAboutItem(String aboutItem) {
-        this.aboutItem = aboutItem;
-    }
-
     public String getPic() {
         return pic;
     }
@@ -98,43 +80,15 @@ public class Item implements Serializable {  // הוספתי את ה-Serializabl
         this.pic = pic;
     }
 
-    public int getNumberRate() {
-        return numberRate;
-    }
-
-    public void setNumberRate(int numberRate) {
-        this.numberRate = numberRate;
-    }
-
-    public double getRate() {
-        return rate;
-    }
-
-    public void setRate(double rate) {
-        this.rate = rate;
-    }
-
-    public double getSumRate() {
-        return sumRate;
-    }
-
-    public void setSumRate(double sumRate) {
-        this.sumRate = sumRate;
-    }
-
     @Override
     public String toString() {
         return "Item{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
-                ", color='" + color + '\'' +
-                ", company='" + company + '\'' +
                 ", aboutItem='" + aboutItem + '\'' +
                 ", price=" + price +
-                ", numberRate=" + numberRate +
-                ", rate=" + rate +
-                ", sumRate=" + sumRate +
+                ", pic='" + pic + '\'' +
                 '}';
     }
 }

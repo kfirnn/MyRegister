@@ -159,7 +159,9 @@ public class AddItem extends AppCompatActivity implements View.OnClickListener {
 
             String itemid = databaseService.generateItemId();
 
-            Item newItem = new Item(itemid, itemName, type, imageBase64, dedc, price);
+
+
+                Item newItem = new Item(itemid, itemName, type, imageBase64, dedc, price);
             databaseService.createNewItem(newItem, new DatabaseService.DatabaseCallback<Void>() {
                 @Override
                 public void onCompleted(Void object) {
