@@ -82,6 +82,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             previewTextView.setText(item.getName());
             previewPriceTextView.setText("₪" + item.getPrice());
             itemId = item.getId();
+
+            itemView.setOnClickListener(v -> {
+                if (itemClickListener != null) {
+                    itemClickListener.onClick(item);
+                }
+            });
         }
+
     }
 }

@@ -46,7 +46,15 @@ public class StoreActivity extends AppCompatActivity {
 
 
         // אתחול האדפטר לרשימה
-          itemsAdapter = new ItemAdapter(itemsList,  StoreActivity.this);
+        itemsAdapter = new ItemAdapter(itemsList, StoreActivity.this, new ItemAdapter.ItemClickListener() {
+            @Override
+            public void onClick(Item item) {
+                Intent intent = new Intent(StoreActivity.this, ShowSpecificItemsActivity.class);
+                intent.putExtra("selectedItem", item);
+                startActivity(intent);
+            }
+        });
+
 
         rcItems.setLayoutManager(new LinearLayoutManager(this));
 
