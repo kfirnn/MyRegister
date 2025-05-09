@@ -1,15 +1,10 @@
 package com.example.myregister.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,8 +27,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     }
 
     private static final String TAG = "ItemsAdapter";
-    private List<Item> originalItemsList;
-    private List<Item> filteredItemsList;
+    private List<Item> itemList;
     private Context context;
 
 
@@ -41,8 +35,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     private final ItemClickListener itemClickListener;
 
     public ItemAdapter(List<Item> itemsList, Context context, @Nullable final ItemClickListener itemClickListener) {
-        this.originalItemsList = itemsList;
-        this.filteredItemsList = new ArrayList<>(itemsList);
+        this.itemList = itemsList;
         this.context = context;
         this.itemClickListener = itemClickListener;
     }
@@ -55,13 +48,23 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        Item item = filteredItemsList.get(position);
+        Item item = itemList.get(position);
+        if (item == null) return;
         holder.bindItem(item);
     }
 
     @Override
     public int getItemCount() {
-        return filteredItemsList.size();
+        return itemList.size();
+    }
+
+
+    public void setItems(List<Item> items) {
+        this.itemList.clear();
+        this.itemList.addAll(items);
+
+
+        this.notifyDataSetChanged();
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -73,13 +76,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         public ItemViewHolder(View itemView) {
             super(itemView);
             previewImageView = itemView.findViewById(R.id.itemImageView);
-            previewTextView = itemView.findViewById(R.id.itemName);
+            previewTextView = itemView.findViewById(R.id.nameTextView);
             previewPriceTextView = itemView.findViewById(R.id.priceTextView);
         }
 
         public void bindItem(final Item item) {
             previewImageView.setImageBitmap(ImageUtil.convertFrom64base(item.getPic()));
-            previewTextView.setText(item.getName());
+            previewTextView.setText(item.getName()+ "");
             previewPriceTextView.setText("₪" + item.getPrice());
             itemId = item.getId();
 

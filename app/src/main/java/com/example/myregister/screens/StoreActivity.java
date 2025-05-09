@@ -46,7 +46,7 @@ public class StoreActivity extends AppCompatActivity {
 
 
         // אתחול האדפטר לרשימה
-        itemsAdapter = new ItemAdapter(itemsList, StoreActivity.this, new ItemAdapter.ItemClickListener() {
+        itemsAdapter = new ItemAdapter(new ArrayList<>(), StoreActivity.this, new ItemAdapter.ItemClickListener() {
             @Override
             public void onClick(Item item) {
                 Intent intent = new Intent(StoreActivity.this, ShowSpecificItemsActivity.class);
@@ -60,30 +60,19 @@ public class StoreActivity extends AppCompatActivity {
 
         rcItems.setAdapter(itemsAdapter);
 
-
-
         databaseService.getItems(new DatabaseService.DatabaseCallback<List<Item>>() {
             @Override
-         public    void onCompleted(List<Item> object) {
-
+            public void onCompleted(List<Item> object) {
+                itemsList.clear();
                 itemsList.addAll(object);
-
-
-                itemsAdapter.notifyDataSetChanged();
-
-
-
-
-
+                itemsAdapter.setItems(object);
             }
 
             @Override
-          public    void onFailed(Exception e) {
+            public void onFailed(Exception e) {
 
             }
         });
-
-
 
 
         // אתחול Spinner של קטגוריות משנה
@@ -114,15 +103,6 @@ public class StoreActivity extends AppCompatActivity {
             showAllItems();
         });
 
-        // מאזין לבחירת פריט ב-ListView
-//        lvItem.setOnItemClickListener((parent, view, position, id) -> {
-//            String selectedItem = itemsList.get(position);
-//            Toast.makeText(StoreActivity.this, "נבחר: " + selectedItem, Toast.LENGTH_SHORT).show();
-//
-//            Intent intent = new Intent(StoreActivity.this, ShowSpecificItemsActivity.class);
-//            intent.putExtra("selectedItem", selectedItem);
-//            startActivity(intent);
-//        });
 
     }
 
@@ -145,15 +125,11 @@ public class StoreActivity extends AppCompatActivity {
                 searchResults.add(item);
             }
         }
-        itemsList.clear();
-        itemsList.addAll(searchResults);
-        itemsAdapter.notifyDataSetChanged();
+        itemsAdapter.setItems(searchResults);
     }
 
     // פונקציה להציג את כל הפריטים
     private void showAllItems() {
-        itemsList.clear();
-        itemsList.addAll(itemsList);
-        itemsAdapter.notifyDataSetChanged();
+        itemsAdapter.setItems(itemsList);
     }
 }

@@ -49,7 +49,8 @@ public class ImageUtil {
     /// Convert a base64 string to an image
     /// @param base64Code The base64 string to convert
     /// @return The image represented by the base64 string
-    public static @Nullable Bitmap convertFrom64base(@NotNull final String base64Code) {
+    public static @Nullable Bitmap convertFrom64base(final String base64Code) {
+        if (base64Code == null) return null;
         if (base64Code.isEmpty()) {
             return null;
         }
