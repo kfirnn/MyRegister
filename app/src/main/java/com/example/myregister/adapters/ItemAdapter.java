@@ -4,94 +4,85 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.annotation.Nullable;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myregister.R;
 import com.example.myregister.model.Item;
-import com.example.myregister.services.DatabaseService;
 import com.example.myregister.utils.ImageUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
-    private DatabaseService databaseService;
-
-
-    public interface ItemClickListener {
-        void onClick(Item item);
-    }
-
-    private static final String TAG = "ItemsAdapter";
-    private List<Item> itemList;
+    private List<Item> items;
     private Context context;
+    private OnItemClickListener listener;
 
+    public interface OnItemClickListener {
+        void onItemClick(Item item);
+        void onAddToCartClick(Item item);
+    }
 
-    @Nullable
-    private final ItemClickListener itemClickListener;
-
-    public ItemAdapter(List<Item> itemsList, Context context, @Nullable final ItemClickListener itemClickListener) {
-        this.itemList = itemsList;
+    public ItemAdapter(List<Item> items, Context context, OnItemClickListener listener) {
+        this.items = items;
         this.context = context;
-        this.itemClickListener = itemClickListener;
+        this.listener = listener;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_store, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_store, parent, false);
-        return new ItemViewHolder(view);
-    }
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Item item = items.get(position);
+        
+        holder.nameTextView.setText(item.getName());
+        holder.typeTextView.setText("Type: " + item.getType());
+        holder.priceTextView.setText("Price: ₪" + item.getPrice());
 
-    @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
-        Item item = itemList.get(position);
-        if (item == null) return;
-        holder.bindItem(item);
+        if (item.getPic() != null && !item.getPic().isEmpty()) {
+            holder.itemImageView.setImageBitmap(ImageUtil.convertFrom64base(item.getPic()));
+        } else {
+            holder.itemImageView.setImageResource(R.drawable.ic_launcher_foreground);
+        }
+
+        holder.itemView.setOnClickListener(v -> listener.onItemClick(item));
+        holder.addToCartButton.setOnClickListener(v -> listener.onAddToCartClick(item));
     }
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return items.size();
     }
-
 
     public void setItems(List<Item> items) {
-        this.itemList.clear();
-        this.itemList.addAll(items);
-
-
-        this.notifyDataSetChanged();
+        this.items = items;
+        notifyDataSetChanged();
     }
 
-    public class ItemViewHolder extends RecyclerView.ViewHolder {
-        private ImageView previewImageView;
-        private TextView previewTextView;
-        private TextView previewPriceTextView;
-        private String itemId;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView itemImageView;
+        TextView nameTextView;
+        TextView typeTextView;
+        TextView priceTextView;
+        Button addToCartButton;
 
-        public ItemViewHolder(View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            previewImageView = itemView.findViewById(R.id.itemImageView);
-            previewTextView = itemView.findViewById(R.id.nameTextView);
-            previewPriceTextView = itemView.findViewById(R.id.priceTextView);
+            itemImageView = itemView.findViewById(R.id.itemImageView);
+            nameTextView = itemView.findViewById(R.id.nameTextView);
+            typeTextView = itemView.findViewById(R.id.typeTextView);
+            priceTextView = itemView.findViewById(R.id.priceTextView);
+            addToCartButton = itemView.findViewById(R.id.addToCartButton);
         }
-
-        public void bindItem(final Item item) {
-            previewImageView.setImageBitmap(ImageUtil.convertFrom64base(item.getPic()));
-            previewTextView.setText(item.getName()+ "");
-            previewPriceTextView.setText("₪" + item.getPrice());
-            itemId = item.getId();
-
-            itemView.setOnClickListener(v -> {
-                if (itemClickListener != null) {
-                    itemClickListener.onClick(item);
-                }
-            });
-        }
-
     }
 }

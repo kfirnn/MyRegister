@@ -8,7 +8,6 @@
     android:background="#FBF3C8"
     tools:context=".screens.MainActivity">
 
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
@@ -22,7 +21,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/icon"
         tools:ignore="ContentDescription" />
-
 
     <Button
         android:id="@+id/registerButton"

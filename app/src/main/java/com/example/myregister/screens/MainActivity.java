@@ -13,7 +13,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.myregister.R;
-import com.example.myregister.services.AuthenticationService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,16 +28,6 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        if (AuthenticationService.getInstance().isUserSignedIn()) {
-            SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-            String email = sharedpreferences.getString("email", "");
-            Intent intent = new Intent(this, HomePage.class);
-            if (email.equals(Login.admin)) {
-                intent = new Intent(this, AdminPage.class);
-            }
-
-        }
     }
 
     public void onRegisterClick(View view) {
@@ -47,11 +36,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onLoginClick(View view) {
-
+        Intent go = new Intent(getApplicationContext(), Login.class);
+        startActivity(go);
     }
 
     public void onLoginClick2(View view) {
-        Intent go=new Intent(getApplicationContext(),Login.class);
+        Intent go = new Intent(getApplicationContext(), Login.class);
         startActivity(go);
     }
 }

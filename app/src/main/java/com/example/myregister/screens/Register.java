@@ -27,7 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     EditText etFname, etLname, etPhone, etEmail, etPassword;
-    String fname, lname, Phone, Email, Password;
+    String fName, lName, Phone, Email, Password;
     String city;
     Spinner spCity;
     Button btnReg;
@@ -72,20 +72,20 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
-        fname = etFname.getText().toString();
-        lname = etLname.getText().toString();
+        fName = etFname.getText().toString();
+        lName = etLname.getText().toString();
         Phone = etPhone.getText().toString();
         Email = etEmail.getText().toString();
-       Password = etPassword.getText().toString();
+        Password = etPassword.getText().toString();
 
 
         //check if registration is valid
         Boolean isValid = true;
-        if (fname.length() < 2) {
+        if (fName.length() < 2) {
             etFname.setError("שם פרטי קצר מדי");
             isValid = false;
         }
-        if (lname.length() < 2) {
+        if (lName.length() < 2) {
             Toast.makeText(Register.this, "שם משפחה קצר מדי", Toast.LENGTH_LONG).show();
             isValid = false;
         }
@@ -117,7 +117,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("TAG", "createUserWithEmail:success");
                                 FirebaseUser fireuser = mAuth.getCurrentUser();
-                                User newUser = new User(fireuser.getUid(), fname, lname, Phone, Email, Password,city);
+                                User newUser = new User(fireuser.getUid(), fName, lName, Phone, Email, Password,city);
                                 myRef.child(fireuser.getUid()).setValue(newUser);
                                 SharedPreferences.Editor editor = sharedpreferences.edit();
 
