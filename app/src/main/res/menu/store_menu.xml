@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_cart"
+        android:icon="@drawable/ic_cart"
+        android:title="Cart"
+        app:actionLayout="@layout/cart_badge_layout"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_more"
+        android:icon="@drawable/ic_more"
+        android:title="More"
+        app:showAsAction="always">
+        
+        <menu>
+            <item
+                android:id="@+id/action_store"
+                android:title="Store"/>
+
+            <item
+                android:id="@+id/action_home"
+                android:title="Home"/>
+
+            <item
+                android:id="@+id/action_games"
+                android:title="Games"/>
+        </menu>
+    </item>
+</menu> 

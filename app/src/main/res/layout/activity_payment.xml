@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FBF3C8">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvPaymentTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Payment Details"
+            android:textColor="#0A4875"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTotalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="#0A4875"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPaymentTitle" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilCardNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="Card Number"
+            app:layout_constraintTop_toBottomOf="@+id/tvTotalAmount">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCardNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="16" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilCardHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Card Holder Name"
+            app:layout_constraintTop_toBottomOf="@+id/tilCardNumber">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCardHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/llExpiryAndCvv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/tilCardHolder">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilExpiry"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:hint="Expiry (MM/YY)">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etExpiry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:maxLength="5" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilCvv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:hint="CVV">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCvv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberPassword"
+                    android:maxLength="3" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnPayNow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:text="Pay Now"
+            android:textSize="18sp"
+            android:padding="12dp"
+            android:backgroundTint="#0A4875"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/llExpiryAndCvv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView> 
