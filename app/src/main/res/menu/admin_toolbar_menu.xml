@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_homee"
+        android:title="Home"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_storee"
+        android:title="Store"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_cartt"
+        android:title="Cart"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_profilee"
+        android:title="Profile"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_adminn"
+        android:title="Admin Page"
+        android:visible="false"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_logoutt"
+        android:title="Logout"
+        app:showAsAction="never"/>
+
+</menu> 
