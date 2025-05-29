@@ -11,8 +11,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myregister.R;
-import com.example.myregister.model.Cart;
 import com.example.myregister.model.Item;
+import com.example.myregister.utils.CartManager;
 import com.example.myregister.utils.ImageUtil;
 
 public class ShowSpecificItemsActivity extends AppCompatActivity {
@@ -25,7 +25,6 @@ public class ShowSpecificItemsActivity extends AppCompatActivity {
     private TextView itemDetailDescription;
     private Button btnAddToCartDetail;
     private Item selectedItem;
-    private Cart cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +39,8 @@ public class ShowSpecificItemsActivity extends AppCompatActivity {
         itemDetailDescription = findViewById(R.id.itemDetailDescription);
         btnAddToCartDetail = findViewById(R.id.btnAddToCartDetail);
 
-        // Get the item and cart from intent
+        // Get the item from intent
         selectedItem = (Item) getIntent().getSerializableExtra("selectedItem");
-        cart = (Cart) getIntent().getSerializableExtra("cart");
-        
-        if (cart == null) {
-            cart = new Cart();
-        }
 
         if (selectedItem == null) {
             Log.e(TAG, "No item data received");
@@ -77,13 +71,9 @@ public class ShowSpecificItemsActivity extends AppCompatActivity {
 
         // Set up Add to Cart button
         btnAddToCartDetail.setOnClickListener(v -> {
-            cart.addItem(selectedItem);
+            CartManager.getInstance().addToCart(selectedItem.getId(), selectedItem.getName(), selectedItem.getPrice());
             Toast.makeText(this, "Added " + selectedItem.getName() + " to cart", Toast.LENGTH_SHORT).show();
-            
-            // Return to store activity with updated cart
-            Intent intent = new Intent();
-            intent.putExtra("updatedCart", cart);
-            setResult(RESULT_OK, intent);
+            setResult(RESULT_OK);
             finish();
         });
     }

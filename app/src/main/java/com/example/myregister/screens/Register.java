@@ -26,13 +26,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+    private static final String TAG = "Register";
+    
     EditText etFname, etLname, etPhone, etEmail, etPassword;
     String fName, lName, Phone, Email, Password;
     String city;
     Spinner spCity;
     Button btnReg;
-
-    boolean isValid;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -44,16 +44,16 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        init_views();
-
-
-        // Write a message to the database
+        
+        // Initialize Firebase
+        mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Users");
-
-        mAuth = FirebaseAuth.getInstance();
-
+        
+        // Initialize SharedPreferences
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        
+        init_views();
     }
 
     private void init_views() {
@@ -63,106 +63,134 @@ public class Register extends AppCompatActivity implements View.OnClickListener,
         etPhone = findViewById(R.id.etPhone);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
-        spCity=findViewById(R.id.spiCity);
+        spCity = findViewById(R.id.spiCity);
 
-        btnReg.findViewById(R.id.btnReg);
         btnReg.setOnClickListener(this);
         spCity.setOnItemSelectedListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        fName = etFname.getText().toString();
-        lName = etLname.getText().toString();
-        Phone = etPhone.getText().toString();
-        Email = etEmail.getText().toString();
-        Password = etPassword.getText().toString();
+        if (v.getId() == R.id.btnReg) {
+            registerUser();
+        }
+    }
 
+    private void registerUser() {
+        // Get input values
+        fName = etFname.getText().toString().trim();
+        lName = etLname.getText().toString().trim();
+        Phone = etPhone.getText().toString().trim();
+        Email = etEmail.getText().toString().trim();
+        Password = etPassword.getText().toString().trim();
 
-        //check if registration is valid
-        Boolean isValid = true;
+        // Validate input
+        if (!validateInput()) {
+            return;
+        }
+
+        // Show progress to user
+        Toast.makeText(Register.this, "מבצע רישום...", Toast.LENGTH_SHORT).show();
+
+        // Create user in Firebase Auth
+        mAuth.createUserWithEmailAndPassword(Email, Password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser fireuser = mAuth.getCurrentUser();
+                            if (fireuser != null) {
+                                // Create user object
+                                User newUser = new User(fireuser.getUid(), fName, lName, Phone, Email, Password, city);
+                                
+                                // Save user to database
+                                myRef.child(fireuser.getUid()).setValue(newUser)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                // Save credentials
+                                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                                editor.putString("email", Email);
+                                                editor.putString("password", Password);
+                                                editor.apply();
+
+                                                // Show success message
+                                                Toast.makeText(Register.this, "הרישום הושלם בהצלחה!", Toast.LENGTH_SHORT).show();
+
+                                                // Go to login page
+                                                Intent goLog = new Intent(Register.this, Login.class);
+                                                goLog.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                startActivity(goLog);
+                                                finish();
+                                            } else {
+                                                // Failed to save user data
+                                                Toast.makeText(Register.this, "שגיאה בשמירת נתוני המשתמש", Toast.LENGTH_LONG).show();
+                                                // Delete the auth user since we couldn't save their data
+                                                fireuser.delete();
+                                            }
+                                        }
+                                    });
+                            }
+                        } else {
+                            // Registration failed
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            String errorMessage = task.getException() != null ? task.getException().getMessage() : "Authentication failed";
+                            Toast.makeText(Register.this, "שגיאה: " + errorMessage, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    private boolean validateInput() {
+        boolean isValid = true;
+
         if (fName.length() < 2) {
             etFname.setError("שם פרטי קצר מדי");
             isValid = false;
         }
         if (lName.length() < 2) {
-            Toast.makeText(Register.this, "שם משפחה קצר מדי", Toast.LENGTH_LONG).show();
+            etLname.setError("שם משפחה קצר מדי");
             isValid = false;
         }
         if (Phone.length() < 9 || Phone.length() > 10) {
-            Toast.makeText(Register.this, "מספר הטלפון לא תקין", Toast.LENGTH_LONG).show();
+            etPhone.setError("מספר הטלפון לא תקין");
             isValid = false;
         }
-
         if (!Email.contains("@")) {
-            Toast.makeText(Register.this, "כתובת האימייל לא תקינה", Toast.LENGTH_LONG).show();
+            etEmail.setError("כתובת האימייל לא תקינה");
             isValid = false;
         }
         if (Password.length() < 6) {
-            Toast.makeText(Register.this, "הסיסמה קצרה מדי", Toast.LENGTH_LONG).show();
+            etPassword.setError("הסיסמה חייבת להכיל לפחות 6 תווים");
             isValid = false;
         }
         if (Password.length() > 20) {
-            Toast.makeText(Register.this, "הסיסמה ארוכה מדי", Toast.LENGTH_LONG).show();
+            etPassword.setError("הסיסמה ארוכה מדי");
+            isValid = false;
+        }
+        if (city == null || city.isEmpty()) {
+            Toast.makeText(this, "אנא בחר עיר", Toast.LENGTH_SHORT).show();
             isValid = false;
         }
 
-
-        if (isValid == true) {
-            mAuth.createUserWithEmailAndPassword(Email, Password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d("TAG", "createUserWithEmail:success");
-                                FirebaseUser fireuser = mAuth.getCurrentUser();
-                                User newUser = new User(fireuser.getUid(), fName, lName, Phone, Email, Password,city);
-                                myRef.child(fireuser.getUid()).setValue(newUser);
-                                SharedPreferences.Editor editor = sharedpreferences.edit();
-
-                                editor.putString("email", Email);
-                                editor.putString("password", Password);
-
-                                editor.commit();
-                           Intent goLog = new Intent(getApplicationContext(), Login.class);
-                                startActivity(goLog);
-
-
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w("TAG", "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(Register.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-
-                            }
-
-                            // ...
-                        }
-                    });
-        }
-
-
+        return isValid;
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-      city= (String) adapterView.getItemAtPosition(i);
+        city = (String) adapterView.getItemAtPosition(i);
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-     city= (String) adapterView.getItemAtPosition(0);
-    }
-
-    public void onRegisterClick2(View view) {
-        Intent go=new Intent(getApplicationContext(),HomePage.class);
-        startActivity(go);
+        city = (String) adapterView.getItemAtPosition(0);
     }
 
     public void onGobackClick(View view) {
-        Intent go=new Intent(getApplicationContext(),MainActivity.class);
+        Intent go = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(go);
+        finish();
     }
 }
 

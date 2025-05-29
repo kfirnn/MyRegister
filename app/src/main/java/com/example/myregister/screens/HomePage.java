@@ -85,6 +85,12 @@ public class HomePage extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // מאזין לכפתור "משחקים"
+        btnGames.setOnClickListener(v -> {
+            Intent intent = new Intent(HomePage.this, GamesActivity.class);
+            startActivity(intent);
+        });
+
         // מאזין לכפתור "פרופיל"
         btnProfile.setOnClickListener(v -> {
             Intent intent = new Intent(HomePage.this, ProfileActivity.class);
@@ -99,6 +105,13 @@ public class HomePage extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu resource
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        
+        // Show admin menu item only if user is admin
+        MenuItem adminMenuItem = menu.findItem(R.id.menu_admin);
+        if (adminMenuItem != null) {
+            adminMenuItem.setVisible(Login.isAdmin);
+        }
+        
         return true;
     }
 
@@ -118,9 +131,13 @@ public class HomePage extends AppCompatActivity {
         } else if (itemId == R.id.menu_profile) {
             startActivity(new Intent(this, ProfileActivity.class));
             return true;
-        } else if (itemId == R.id.menu_settings) {
-            // TODO: Add Settings activity
-            Toast.makeText(this, "Settings - Coming soon", Toast.LENGTH_SHORT).show();
+
+        } else if (itemId == R.id.menu_admin) {
+            if (Login.isAdmin) {
+                startActivity(new Intent(this, AdminPage.class));
+            } else {
+                Toast.makeText(this, "Access denied: Admin only", Toast.LENGTH_SHORT).show();
+            }
             return true;
         } else if (itemId == R.id.menu_logout) {
             AuthenticationService.getInstance().signOut();

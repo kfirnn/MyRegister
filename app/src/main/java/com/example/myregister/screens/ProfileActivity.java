@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
-    private TextInputEditText editFullName, editEmail, editPhone;
+    private TextInputEditText editFirstName, editLastName, editEmail, editPhone;
     private TextInputEditText editCurrentPassword, editNewPassword, editConfirmPassword;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference userRef;
@@ -54,7 +54,8 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         // Initialize views
-        editFullName = findViewById(R.id.editFullName);
+        editFirstName = findViewById(R.id.editFirstName);
+        editLastName = findViewById(R.id.editLastName);
         editEmail = findViewById(R.id.editEmail);
         editPhone = findViewById(R.id.editPhone);
         editCurrentPassword = findViewById(R.id.editCurrentPassword);
@@ -74,11 +75,13 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    String name = snapshot.child("fullName").getValue(String.class);
+                    String fName = snapshot.child("fName").getValue(String.class);
+                    String lName = snapshot.child("lName").getValue(String.class);
                     String email = snapshot.child("email").getValue(String.class);
                     String phone = snapshot.child("phone").getValue(String.class);
 
-                    if (name != null) editFullName.setText(name);
+                    if (fName != null) editFirstName.setText(fName);
+                    if (lName != null) editLastName.setText(lName);
                     if (email != null) editEmail.setText(email);
                     if (phone != null) editPhone.setText(phone);
                 }
@@ -93,7 +96,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void saveChanges() {
-        String newName = Objects.requireNonNull(editFullName.getText()).toString().trim();
+        String newFirstName = Objects.requireNonNull(editFirstName.getText()).toString().trim();
+        String newLastName = Objects.requireNonNull(editLastName.getText()).toString().trim();
         String newEmail = Objects.requireNonNull(editEmail.getText()).toString().trim();
         String newPhone = Objects.requireNonNull(editPhone.getText()).toString().trim();
         String currentPassword = Objects.requireNonNull(editCurrentPassword.getText()).toString();
@@ -101,14 +105,16 @@ public class ProfileActivity extends AppCompatActivity {
         String confirmPassword = Objects.requireNonNull(editConfirmPassword.getText()).toString();
 
         // Validate inputs
-        if (TextUtils.isEmpty(newName) || TextUtils.isEmpty(newEmail) || TextUtils.isEmpty(newPhone)) {
+        if (TextUtils.isEmpty(newFirstName) || TextUtils.isEmpty(newLastName) || 
+            TextUtils.isEmpty(newEmail) || TextUtils.isEmpty(newPhone)) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Update profile information
         Map<String, Object> updates = new HashMap<>();
-        updates.put("fullName", newName);
+        updates.put("fName", newFirstName);
+        updates.put("lName", newLastName);
         updates.put("phone", newPhone);
 
         // Update email if changed
@@ -130,8 +136,11 @@ public class ProfileActivity extends AppCompatActivity {
             if (user != null) {
                 user.reauthenticate(EmailAuthProvider.getCredential(user.getEmail(), currentPassword))
                         .addOnSuccessListener(aVoid -> user.updatePassword(newPassword)
-                                .addOnSuccessListener(aVoid1 -> Toast.makeText(ProfileActivity.this,
-                                        "Password updated successfully", Toast.LENGTH_SHORT).show())
+                                .addOnSuccessListener(aVoid1 -> {
+                                    Toast.makeText(ProfileActivity.this,
+                                            "Password updated successfully", Toast.LENGTH_SHORT).show();
+                                    updates.put("password", newPassword);
+                                })
                                 .addOnFailureListener(e -> Toast.makeText(ProfileActivity.this,
                                         "Failed to update password: " + e.getMessage(),
                                         Toast.LENGTH_SHORT).show()))

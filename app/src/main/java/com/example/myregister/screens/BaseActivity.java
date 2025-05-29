@@ -5,6 +5,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,6 +25,13 @@ public abstract class BaseActivity extends AppCompatActivity implements CartMana
     protected void onStart() {
         super.onStart();
         setupToolbar();
+        CartManager.getInstance().setCartUpdateListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        CartManager.getInstance().setCartUpdateListener(null);
     }
 
     protected void setupToolbar() {
@@ -45,6 +53,12 @@ public abstract class BaseActivity extends AppCompatActivity implements CartMana
             cartBadge = actionView.findViewById(R.id.cart_badge);
             
             actionView.setOnClickListener(v -> {
+                if (!CartManager.getInstance().isUserLoggedIn()) {
+                    Toast.makeText(this, "Please log in to view your cart", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, Login.class);
+                    startActivity(intent);
+                    return;
+                }
                 Intent intent = new Intent(this, CartActivity.class);
                 startActivity(intent);
             });
@@ -60,8 +74,18 @@ public abstract class BaseActivity extends AppCompatActivity implements CartMana
         updateCartBadge();
     }
 
+    @Override
+    public void onError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
     private void updateCartBadge() {
         if (cartBadge != null) {
+            if (!CartManager.getInstance().isUserLoggedIn()) {
+                cartBadge.setVisibility(View.GONE);
+                return;
+            }
+
             int itemCount = CartManager.getInstance().getCartItemCount();
             if (itemCount > 0) {
                 cartBadge.setVisibility(View.VISIBLE);

@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myregister.R;
 import com.example.myregister.adapters.ItemAdapter;
-import com.example.myregister.model.Cart;
 import com.example.myregister.model.Item;
 import com.example.myregister.services.DatabaseService;
 import com.example.myregister.models.CartItem;
@@ -31,7 +30,6 @@ public class StoreActivity extends BaseActivity {
     private EditText etSearchItem;
     private Button btnSearchItems, btnAllItems;
     private RecyclerView rcItems;
-    private Cart cart;
 
     private List<Item> itemsList = new ArrayList<>();
     private ItemAdapter itemsAdapter;
@@ -44,7 +42,6 @@ public class StoreActivity extends BaseActivity {
         setContentView(R.layout.activity_store);
 
         databaseService = DatabaseService.getInstance();
-        cart = new Cart();
         CartManager.getInstance().setCartUpdateListener(this);
 
         initViews();
@@ -54,7 +51,6 @@ public class StoreActivity extends BaseActivity {
             public void onItemClick(Item item) {
                 Intent intent = new Intent(StoreActivity.this, ShowSpecificItemsActivity.class);
                 intent.putExtra("selectedItem", item);
-                intent.putExtra("cart", cart);
                 startActivity(intent);
             }
 

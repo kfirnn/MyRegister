@@ -20,8 +20,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,8 +35,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     String email2, pass2;
     private FirebaseAuth mAuth;
-    public static final String admin = "levyarin14@gmail.com";
-    String adminPass = "010407";
+    public static final String admin = "kfirn5566@gmail.com";
+    String adminPass = "kfir2311";
     public static final String MyPREFERENCES = "MyPrefs";
 
     SharedPreferences sharedpreferences;
@@ -76,27 +79,48 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             return;
         }
 
+        // First try to authenticate with Firebase Auth
         mAuth.signInWithEmailAndPassword(email2, pass2)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "signInWithEmail:success");
-
-                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString("email", email2);
-                        editor.putString("password", pass2);
-                        editor.apply();
-
                         FirebaseUser user = mAuth.getCurrentUser();
-                        myRef = database.getReference("Users").child(user.getUid());
+                        
+                        // Check if user exists in Realtime Database
+                        DatabaseReference usersRef = database.getReference("Users");
+                        usersRef.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+                                    // User exists in database, proceed with login
+                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                    editor.putString("email", email2);
+                                    editor.putString("password", pass2);
+                                    editor.apply();
 
-                        if (email2.equals(admin) && pass2.equals(adminPass)) {
-                            isAdmin = true;
-                            startActivity(new Intent(Login.this, AdminPage.class));
-                        } else {
-                            startActivity(new Intent(Login.this, HomePage.class));
-                        }
+                                    if (email2.equals(admin) && pass2.equals(adminPass)) {
+                                        isAdmin = true;
+                                    } else {
+                                        isAdmin = false;
+                                    }
+
+                                    startActivity(new Intent(Login.this, HomePage.class));
+                                    finish();
+                                } else {
+                                    // User doesn't exist in database
+                                    mAuth.signOut(); // Sign out from Firebase Auth
+                                    Toast.makeText(Login.this, "משתמש לא רשום במערכת. אנא הירשם תחילה", Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.w(TAG, "loadUser:onCancelled", error.toException());
+                                Toast.makeText(Login.this, "שגיאה בטעינת נתוני משתמש", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     } else {
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
                         Exception e = task.getException();

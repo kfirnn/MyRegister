@@ -9,7 +9,6 @@ public class Item implements Serializable {  // הוספתי את ה-Serializabl
     protected String name;
     protected String type;
 
-
     protected String aboutItem;
     protected double price;
     protected String pic;

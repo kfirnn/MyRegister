@@ -4,10 +4,9 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-
-import com.example.myregister.model.Cart;
 import com.example.myregister.model.Item;
 import com.example.myregister.model.User;
+import com.example.myregister.model.Order;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -15,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 /// a service to interact with the Firebase Realtime Database.
 /// this class is a singleton, use getInstance() to get an instance of this class
@@ -129,18 +127,6 @@ public class DatabaseService {
 
     // public methods to interact with the database
 
-    /// create a new user in the database
-    /// @param user the user object to create
-    /// @param callback the callback to call when the operation is completed
-    ///              the callback will receive void
-    ///            if the operation fails, the callback will receive an exception
-    /// @return void
-    /// @see DatabaseCallback
-    /// @see User
-    public void createNewUser(@NotNull final User user, @Nullable final DatabaseCallback<Void> callback) {
-        writeData("Users/" + user.getId(), user, callback);
-    }
-
     /// create a new item in the database
     /// @param item the item object to create
     /// @param callback the callback to call when the operation is completed
@@ -152,19 +138,6 @@ public class DatabaseService {
     public void createNewItem(@NotNull final Item item, @Nullable final DatabaseCallback<Void> callback) {
         writeData("items/" + item.getId(), item, callback);
     }
-
-    /// create a new cart in the database
-    /// @param cart the cart object to create
-    /// @param callback the callback to call when the operation is completed
-    ///               the callback will receive void
-    ///              if the operation fails, the callback will receive an exception
-    /// @return void
-    /// @see DatabaseCallback
-    /// @see Cart
-    public void createNewCart(@NotNull final Cart cart, @Nullable final DatabaseCallback<Void> callback) {
-        writeData("carts/" + cart.getItems(), cart, callback);
-    }
-
 
     /// get a user from the database
     /// @param uid the id of the user to get
@@ -190,32 +163,12 @@ public class DatabaseService {
         getData("items/" + itemId, Item.class, callback);
     }
 
-    /// get a cart from the database
-    /// @param cartId the id of the cart to get
-    /// @param callback the callback to call when the operation is completed
-    ///                the callback will receive the cart object
-    ///               if the operation fails, the callback will receive an exception
-    /// @return void
-    /// @see DatabaseCallback
-    /// @see Cart
-    public void getCart(@NotNull final String cartId, @NotNull final DatabaseCallback<Cart> callback) {
-        getData("carts/" + cartId, Cart.class, callback);
-    }
-
     /// generate a new id for a new item in the database
     /// @return a new id for the item
     /// @see #generateNewId(String)
     /// @see Item
     public String generateItemId() {
         return generateNewId("items");
-    }
-
-    /// generate a new id for a new cart in the database
-    /// @return a new id for the cart
-    /// @see #generateNewId(String)
-    /// @see Cart
-    public String generateCartId() {
-        return generateNewId("carts");
     }
 
     /// get all the items from the database
@@ -271,7 +224,51 @@ public class DatabaseService {
         });
     }
 
+    /// get all orders from the database
+    /// @param callback the callback to call when the operation is completed
+    ///              the callback will receive a list of order objects
+    ///            if the operation fails, the callback will receive an exception
+    /// @return void
+    /// @see DatabaseCallback
+    /// @see List
+    public void getOrders(@NotNull final DatabaseCallback<List<Order>> callback) {
+        readData("Orders").get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.e(TAG, "Error getting orders", task.getException());
+                callback.onFailed(task.getException());
+                return;
+            }
+            List<Order> orders = new ArrayList<>();
+            task.getResult().getChildren().forEach(dataSnapshot -> {
+                Order order = dataSnapshot.getValue(Order.class);
+                Log.d(TAG, "Got order: " + order);
+                if (order != null) {
+                    orders.add(order);
+                }
+            });
+            callback.onCompleted(orders);
+        });
+    }
 
+    /// create a new order in the database
+    /// @param order the order object to create
+    /// @param callback the callback to call when the operation is completed
+    ///               the callback will receive void
+    ///              if the operation fails, the callback will receive an exception
+    /// @return void
+    /// @see DatabaseCallback
+    /// @see Order
+    public void createNewOrder(@NotNull final Order order, @Nullable final DatabaseCallback<Void> callback) {
+        writeData("Orders/" + order.getOrderId(), order, callback);
+    }
+
+    /// generate a new id for a new order in the database
+    /// @return a new id for the order
+    /// @see #generateNewId(String)
+    /// @see Order
+    public String generateOrderId() {
+        return generateNewId("Orders");
+    }
 
     public void deleteUser(String uid, DatabaseCallback<Void> callback) {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(uid);

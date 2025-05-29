@@ -20,23 +20,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myregister.R;
 import com.example.myregister.adapters.CartAdapter;
-import com.example.myregister.model.Cart;
 import com.example.myregister.model.Item;
 import com.example.myregister.model.User;
 import com.example.myregister.services.DatabaseService;
 import com.example.myregister.models.CartItem;
 import com.example.myregister.utils.CartManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CartActivity extends BaseActivity implements CartAdapter.OnCartItemRemovedListener {
-
+    private static final String TAG = "CartActivity";
     private RecyclerView recyclerView;
     private CartAdapter cartAdapter;
     private TextView totalPriceText;
     private TextView emptyCartText;
     private Button checkoutButton;
+    private View loginPrompt;
+    private Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,20 +51,42 @@ public class CartActivity extends BaseActivity implements CartAdapter.OnCartItem
         totalPriceText = findViewById(R.id.total_price);
         emptyCartText = findViewById(R.id.empty_cart_text);
         checkoutButton = findViewById(R.id.checkout_button);
+        loginPrompt = findViewById(R.id.login_prompt);
+        loginButton = findViewById(R.id.login_button);
 
         // Setup RecyclerView
         setupRecyclerView();
-        updateUI();
+        
+        // Check if user is logged in
+        if (!CartManager.getInstance().isUserLoggedIn()) {
+            showLoginPrompt();
+        } else {
+            updateUI();
+        }
 
         // Setup checkout button
         checkoutButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, PaymentActivity.class);
-            double totalAmount = 0;
-            for (CartItem item : CartManager.getInstance().getCartItems()) {
-                totalAmount += item.getPrice() * item.getQuantity();
+            if (!CartManager.getInstance().isUserLoggedIn()) {
+                Toast.makeText(this, "Please log in to checkout", Toast.LENGTH_SHORT).show();
+                return;
             }
+            
+            if (cartAdapter.getItemCount() == 0) {
+                Toast.makeText(this, "Your cart is empty", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Intent intent = new Intent(this, PaymentActivity.class);
+            double totalAmount = CartManager.getInstance().getCartTotal();
             intent.putExtra("total_amount", totalAmount);
             startActivityForResult(intent, PAYMENT_REQUEST_CODE);
+        });
+
+        // Setup login button
+        loginButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+            finish();
         });
     }
 
@@ -88,7 +112,14 @@ public class CartActivity extends BaseActivity implements CartAdapter.OnCartItem
     }
 
     private void updateUI() {
+        if (!CartManager.getInstance().isUserLoggedIn()) {
+            showLoginPrompt();
+            return;
+        }
+
+        loginPrompt.setVisibility(View.GONE);
         List<CartItem> items = CartManager.getInstance().getCartItems();
+        
         if (items.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
             emptyCartText.setVisibility(View.VISIBLE);
@@ -104,10 +135,7 @@ public class CartActivity extends BaseActivity implements CartAdapter.OnCartItem
     }
 
     private void updateTotalPrice() {
-        double total = 0;
-        for (CartItem item : cartAdapter.getItems()) {
-            total += item.getPrice() * item.getQuantity();
-        }
+        double total = CartManager.getInstance().getCartTotal();
         totalPriceText.setText(String.format("Total: ₪%.2f", total));
     }
 
@@ -124,5 +152,18 @@ public class CartActivity extends BaseActivity implements CartAdapter.OnCartItem
         super.onCartUpdated(items);
         cartAdapter.updateItems(items);
         updateUI();
+    }
+
+    private void showLoginPrompt() {
+        recyclerView.setVisibility(View.GONE);
+        emptyCartText.setVisibility(View.GONE);
+        totalPriceText.setVisibility(View.GONE);
+        checkoutButton.setVisibility(View.GONE);
+        loginPrompt.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
